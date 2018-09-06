@@ -1,0 +1,22 @@
+enclave {
+	
+	trusted {
+   	    public void  do_inst_slide( [user_check] void *p );
+   	    public void  do_zigzagger( void );
+   	    public void  *get_trigger_adrs( void );
+        public int  do_bsearch(int a);
+
+	    public int rsa_encode(int plain);
+	    public int rsa_decode(int cipher);
+        public void set_global_var_pt([user_check] void *gv);
+        public void set_rsa_key(int k);
+
+        public void  *get_bench_adrs( void );
+        public void  *get_bench_data_adrs( void );
+        public void  *get_zz_adrs( void );
+        public void  *get_bsearch_adrs( void );
+	};
+	
+	untrusted {
+	};
+};
