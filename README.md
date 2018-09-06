@@ -50,3 +50,8 @@ We evaluated interrupt timing attacks on two case study platforms.
   attacker code and post-processing scripts. Note that the single-stepping
   framework enhancements we developed for this work have been upstreamed to the
   open-source [SGX-Step](https://github.com/jovanbulck/sgx-step) repository.
+
+## License
+
+All Nemesis code is free software, licensed under
+[GPLv3](https://www.gnu.org/licenses/gpl-3.0).
