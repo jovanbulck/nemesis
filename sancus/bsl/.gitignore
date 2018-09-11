@@ -1,0 +1,9 @@
+*.o
+*.fst
+*.fst.hier
+*.bin
+*.elf
+*.elf-no-macs
+*.out
+
+stimulus.v

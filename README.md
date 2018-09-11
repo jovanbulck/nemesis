@@ -34,6 +34,8 @@ that interrupt latency reveals microarchitectural instruction timings from
 off-the-shelf Intel SGX enclaves. Finally, we discuss challenges for
 mitigating Nemesis-type attacks at the hardware and software levels.
 
+![thumbnail](thumbnail.png)
+
 ## Source code overview
 
 We evaluated interrupt timing attacks on two case study platforms.

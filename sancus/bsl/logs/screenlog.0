@@ -1,0 +1,109 @@
+
+
+------------------------
+[main] Hi from main...
+
+SM sm_bsl with ID 1 enabled	: 0x966c 0x99f0 0x0200 0x030e
+[main] testing balanced BSL for end-to-end execution timing attack..
+ivt[0] is 0xc0
+ivt[1] is 0x83
+ivt[2] is 0xc0
+ivt[3] is 0x83
+ivt[4] is 0xc0
+ivt[5] is 0x83
+ivt[6] is 0xc0
+ivt[7] is 0x83
+ivt[8] is 0xc0
+ivt[9] is 0x83
+ivt[10] is 0xc0
+ivt[11] is 0x83
+ivt[12] is 0xc0
+ivt[13] is 0x83
+ivt[14] is 0x48
+ivt[15] is 0x88
+ivt[16] is 0x48
+ivt[17] is 0x84
+ivt[18] is 0xc0
+ivt[19] is 0x83
+ivt[20] is 0xc0
+ivt[21] is 0x83
+ivt[22] is 0xc0
+ivt[23] is 0x83
+ivt[24] is 0xc0
+ivt[25] is 0x83
+ivt[26] is 0xac
+ivt[27] is 0x84
+ivt[28] is 0xc0
+ivt[29] is 0x83
+ivt[30] is 0x0
+ivt[31] is 0x80
+Unbalanced: wrong pwd[0] byte with TSC 796
+Unbalanced: wrong pwd[0]+[1] bytes with TSC 798
+Balanced: wrong pwd[0] byte with TSC 913
+Unbalanced: wrong pwd[0]+[1] bytes with TSC 913
+--> OK
+Attacking 0th password byte
+[isr] 0th pasword byte is 0xc0
+Attacking 1th password byte
+[isr] 1th pasword byte is 0x83
+Attacking 2th password byte
+[isr] 2th pasword byte is 0xc0
+Attacking 3th password byte
+[isr] 3th pasword byte is 0x83
+Attacking 4th password byte
+[isr] 4th pasword byte is 0xc0
+Attacking 5th password byte
+[isr] 5th pasword byte is 0x83
+Attacking 6th password byte
+[isr] 6th pasword byte is 0xc0
+Attacking 7th password byte
+[isr] 7th pasword byte is 0x83
+Attacking 8th password byte
+[isr] 8th pasword byte is 0xc0
+Attacking 9th password byte
+[isr] 9th pasword byte is 0x83
+Attacking 10th password byte
+[isr] 10th pasword byte is 0xc0
+Attacking 11th password byte
+[isr] 11th pasword byte is 0x83
+Attacking 12th password byte
+[isr] 12th pasword byte is 0xc0
+Attacking 13th password byte
+[isr] 13th pasword byte is 0x83
+Attacking 14th password byte
+[isr] 14th pasword byte is 0x48
+Attacking 15th password byte
+[isr] 15th pasword byte is 0x88
+Attacking 16th password byte
+[isr] 16th pasword byte is 0x48
+Attacking 17th password byte
+[isr] 17th pasword byte is 0x84
+Attacking 18th password byte
+[isr] 18th pasword byte is 0xc0
+Attacking 19th password byte
+[isr] 19th pasword byte is 0x83
+Attacking 20th password byte
+[isr] 20th pasword byte is 0xc0
+Attacking 21th password byte
+[isr] 21th pasword byte is 0x83
+Attacking 22th password byte
+[isr] 22th pasword byte is 0xc0
+Attacking 23th password byte
+[isr] 23th pasword byte is 0x83
+Attacking 24th password byte
+[isr] 24th pasword byte is 0xc0
+Attacking 25th password byte
+[isr] 25th pasword byte is 0x83
+Attacking 26th password byte
+[isr] 26th pasword byte is 0xac
+Attacking 27th password byte
+[isr] 27th pasword byte is 0x84
+Attacking 28th password byte
+[isr] 28th pasword byte is 0xc0
+Attacking 29th password byte
+[isr] 29th pasword byte is 0x83
+Attacking 30th password byte
+[isr] 30th pasword byte is 0x0
+Attacking 31th password byte
+
+[main] exiting...
