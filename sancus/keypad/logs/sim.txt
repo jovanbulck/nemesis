@@ -1,0 +1,65 @@
+Start Verilog simulation...
+=== Atomicity parameters  ===
+Atom bound:     60
+=============================
+=== Spongent parameters ===
+Rate:        18
+State size: 176
+===========================
+=== SpongeWrap parameters ===
+Rate:           16
+Security:       64
+Blocks in key:   4
+=============================
+ ===============================================
+|                 START SIMULATION              |
+ ===============================================
+VCD info: dumpfile tb_openMSP430.vcd opened for output.
+
+
+------------------------
+[main] Hi from main...
+New SM 1 config: 9308 9778 0200 02b8, 0
+Key: 734555f5a4f43290
+New SM 2 config: 9778 9bb0 02b8 0370, 0
+Key: 1af28c6726114cce
+New SM 3 config: 9bb0 9c44 0028 0030, 0
+Key: 820f9c7ef4c63f91
+New SM 4 config: 9c44 9ce6 0000 0000, 0
+Key: 9b5b22e23973f406
+[stimulus] IRQ after instruction 0x9b44:                  MOV  &EDE, &EDE
+[stimulus] IRQ after instruction 0x9b68:                  MOV  r12, x(r4)
+
+[main] spy SM execution time report:
+    ______________________________________
+    738 | first key comparison
+     18 | counter-dependent bit shift
+    233 | reti if to subsequent comparison
+    208 | reti else to subsequent comparison
+
+[main] enter secure PIN...
+[stimulus] IRQ after instruction 0x96f0:                MOV.B x(r12), r13
+	[isr] key '1' was pressed
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x96f0:                MOV.B x(r12), r13
+	[isr] key '2' was pressed
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x96f0:                MOV.B x(r12), r13
+	[isr] key '3' was pressed
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x970e:                  MOV  r12, x(r4)
+[stimulus] IRQ after instruction 0x96f0:                MOV.B x(r12), r13
+	[isr] key 'A' was pressed
+[sm] secret PIN is 123A
+
+[main] exiting...
+ ===============================================
+|               SIMULATION DONE                 |
+|       (stopped through verilog stimulus)      |
+ ===============================================
+

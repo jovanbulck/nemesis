@@ -1,0 +1,33 @@
+[*]
+[*] GTKWave Analyzer v3.3.58 (w)1999-2014 BSI
+[*] Thu Sep  1 16:31:10 2016
+[*]
+[dumpfile] "/media/DATA/Documents/sgx/sgx-laptop/sgx-irq-latency/sancus-keypad/sancus_sim.fst"
+[dumpfile_mtime] "Thu Sep  1 16:25:02 2016"
+[dumpfile_size] 28959004
+[savefile] "/media/DATA/Documents/sgx/sgx-laptop/sgx-irq-latency/sancus-keypad/waveform_view.gtkw"
+[timestart] 10015311000
+[size] 1920 1006
+[pos] -919 -406
+*-16.000000 10015475000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] sancus_sim.
+[treeopen] sancus_sim.timerA_0.
+[sst_width] 201
+[signals_width] 198
+[sst_expanded] 1
+[sst_vpaned_height] 298
+@28
+sancus_sim.dut.mclk
+@22
+sancus_sim.dut.current_inst_pc[15:0]
+@820
+sancus_sim.inst_full[255:0]
+@821
+sancus_sim.e_state[255:0]
+@28
+sancus_sim.timerA_0.irq_ta1
+@24
+sancus_sim.timerA_0.tar[15:0]
+sancus_sim.tsc.tsc[63:0]
+[pattern_trace] 1
+[pattern_trace] 0

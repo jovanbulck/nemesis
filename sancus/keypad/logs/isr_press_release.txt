@@ -1,0 +1,19 @@
+------------------------
+[main] Hi from main...
+
+SM secure with ID 1 enabled     : 0x91f0 0x95ac 0x0200 0x02b8
+
+SM key_mmio with ID 2 enabled   : 0x95ac 0x9640 0x0028 0x0030
+
+[main] enter secure PIN...
+        [isr] key 'D' was pressed!
+        [isr] key 'D' was released!
+        [isr] key 'E' was pressed!
+        [isr] key 'E' was released!
+        [isr] key 'A' was pressed!
+        [isr] key 'A' was released!
+        [isr] key 'D' was pressed!
+[sm] secret PIN is DEAD
+
+[main] exiting...
+
