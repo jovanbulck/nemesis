@@ -9,20 +9,17 @@ LOAD               = sancus-loader
 RM                 = rm -f
 
 CFLAGS             = -I$(SANCUS_SUPPORT_DIR)/include/ --verbose -O1 #-Os
-ifdef __SANCUS_SIM
-    CFLAGS += -D__SANCUS_SIM
-endif
 
 MEM_SIZE_FLAGS      = --ram-size 24K --rom-size 32K
 SIM_FLAGS           = $(MEM_SIZE_FLAGS)
 
 LDFLAGS            = --standalone --verbose $(MEM_SIZE_FLAGS) #--debug
-LIBS               = -L$(SANCUS_SUPPORT_DIR)/lib -ldev-uart -ldev-timer -ldev-pmodkypd
+LIBS               = -L$(SANCUS_SUPPORT_DIR)/lib -ldev-uart -ldev-timer -ldev-pmodkypd -lsm-io
 CRYPTOFLAGS        = --key $(VENDOR_KEY) --debug --fill-macs
 LOADFLAGS          = -device $(DEVICE) -baudrate 115200
 
 NAME               = keypad
-OBJECTS            = main.o sm-pin.o keypad_mmio.o sm_io_wrap.o
+OBJECTS            = main.o sm-pin.o keypad_mmio.o 
 TARGET             = $(NAME).elf
 TARGET_NO_MACS     = $(TARGET)-no-macs
 
@@ -42,8 +39,7 @@ load: $(TARGET)
 	$(LOAD) $(LOADFLAGS) $<
 
 .PHONY: sim
-sim:
-	$(MAKE) CFLAGS="$(CFLAGS) -D__SANCUS_SIM" --always-make
+sim: $(TARGET)
 	sancus-sim $(SIM_FLAGS) $(TARGET)
 
 .PHONY: clean

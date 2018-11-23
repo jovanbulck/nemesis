@@ -2,7 +2,7 @@
 #include <sancus_support/uart.h>
 #include <msp430.h>
 #include "sm-pin.h"
-#include "sm_io_wrap.h"
+#include <sancus_support/sm_io.h>
 
 #define ENABLE_SANCUS_PROTECTION        1
 #define DO_ATTACK                       1
@@ -16,10 +16,6 @@
 #else
     #define DEBUG_PRINT(fmt, args...)
 #endif
-
-#define EXIT()                              \
-    /* set CPUOFF bit in status register */ \
-    asm("bis #0x210, r2");
 
 #define TACTL_DISABLE       (TACLR)
 #define TACTL_ENABLE        (TASSEL_2 + MC_1 + TAIE)
@@ -53,19 +49,17 @@ int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;
 
-    sm_io_init();
-    puts("\n\n------------------------");
-    puts("[main] Hi from main...");
+    msp430_io_init();
 
     #if ENABLE_SANCUS_PROTECTION    
         sancus_enable(&secure);
-        dump_sm_layout(&secure);
+        pr_sm_info(&secure);
         //sancus_enable(&spy);
-        //dump_sm_layout(&spy);
+        //pr_sm_info(&spy);
         sancus_enable(&key_mmio);
-        dump_sm_layout(&key_mmio);
+        pr_sm_info(&key_mmio);
         //sancus_enable(&spy_mmio);
-        //dump_sm_layout(&spy_mmio);
+        //pr_sm_info(&spy_mmio);
     #endif
     
     /** Enable TimerA interrupt source and init SMs **/
@@ -137,7 +131,7 @@ int main(void)
     #endif
     
     puts("\n[main] exiting...");
-    EXIT()
+    EXIT();
 }
 
 
@@ -241,16 +235,3 @@ __attribute__ ((naked)) __attribute__((interrupt(16))) void timerA_isr(void)
     WRAP_ISR(do_timerA_isr)
 }
 
-
-/* =========================== VIOLATION ISR =============================== */
-
-void stop_violation(sm_id callerID, void* retiAddr )
-{
-    printf("--> VIOLATION from reti address %p; exiting...\n", retiAddr);
-    EXIT()
-}
-
-__attribute__ ((naked)) __attribute__((interrupt(SM_VECTOR))) void the_isr(void)
-{
-    WRAP_ISR(stop_violation)
-}
