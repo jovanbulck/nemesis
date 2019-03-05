@@ -16,3 +16,4 @@
 *.mk
 
 *.elf
+screenlog.*

@@ -12,22 +12,14 @@ int main()
     sancus_enable(&foo);
     init_foo();
     
-    SANCUS_STEP_INIT
+    sancus_step_start();
     volatile int rv = leak_foo();
-    SANCUS_STEP_END
+    sancus_step_end();
+    
     printf("All done!\n");
     EXIT();
 }
 
 /* ======== TIMER A ISR ======== */
-
-/*
- * NOTE: we use a naked asm function here to be able to store IRQ latency.
- * (Timer_A continues counting from zero after IRQ generation)
- */
-__attribute__((naked)) __attribute__((interrupt(TIMER_IRQ_VECTOR)))
-void timerA_isr_entry(void)
-{
-    SANCUS_STEP_ISR(print_latency);
-}
+SANCUS_STEP_ISR_ENTRY(sancus_step_print_latency)
 
