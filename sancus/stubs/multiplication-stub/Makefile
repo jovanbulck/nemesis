@@ -17,8 +17,11 @@ $(TARGET): $(TARGET_NO_MAC)
 load: $(TARGET)
 	$(SANCUS_LOAD) $(LOADFLAGS) $<
 
+# redirect output to file and stdout (apt-get install expect)
+# https://stackoverflow.com/a/7219252
 sim: $(TARGET)
-	$(SANCUS_SIM) $(SIMFLAGS) $<
+	unbuffer $(SANCUS_SIM) $(SIMFLAGS) $< | tee sim.out
+	./leak-mul.py sim.out
 
 clean:
 	$(RM) $(TARGET) $(TARGET_NO_MAC) $(OBJECTS)
