@@ -1,0 +1,27 @@
+dist: trusty
+sudo: required
+
+notifications:
+  email: true
+
+services:
+  - docker
+
+language: c
+
+before_install:
+  - git clone https://github.com/sancus-pma/sancus-main.git
+  - cd sancus-main/docker && make build SANCUS_SECURITY=$SECURITY 
+
+script:
+  - docker run -t sancus-devel /bin/sh -c \
+        "cd /sancus/sancus-examples && git checkout $TRAVIS_BRANCH &&
+         make SANCUS_SECURITY=$SECURITY $TARGET.sim"
+  - docker ps -a
+
+env:
+  - TARGET=multiplication-stub       SECURITY=64
+  - TARGET=signed-division-stub      SECURITY=64
+  - TARGET=signed-modulo-stub        SECURITY=64
+  - TARGET=unsigned-division-stub    SECURITY=64
+  - TARGET=unsigned-modulo-stub      SECURITY=64
