@@ -17,3 +17,7 @@
 
 *.elf
 screenlog.*
+
+*.out
+*.bin
+*.fst

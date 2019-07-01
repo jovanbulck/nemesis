@@ -12,14 +12,13 @@ int main()
     sancus_enable(&foo);
     init_foo();
 
-    sancus_step_start();
+    __ss_start();
     volatile int rv = leak_foo();
-    sancus_step_end();
     
     printf("All done!\n");
     EXIT();
 }
 
 /* ======== TIMER A ISR ======== */
-SANCUS_STEP_ISR_ENTRY(sancus_step_print_latency)
+SANCUS_STEP_ISR_ENTRY(__ss_print_latency, __ss_end)
 
