@@ -35,8 +35,9 @@ off-the-shelf Intel SGX enclaves. Finally, we discuss challenges for
 mitigating Nemesis-type attacks at the hardware and software levels.
 
 ![thumbnail](thumbnail.png)
+![sancus-trace](sancus_keystroke_trace_annotated.png)
 
-## Source code overview
+## Source code overview ![status](https://travis-ci.org/jovanbulck/nemesis.svg?branch=master)
 
 We evaluated interrupt timing attacks on two case study platforms.
 
