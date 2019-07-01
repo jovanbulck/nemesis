@@ -37,7 +37,7 @@ mitigating Nemesis-type attacks at the hardware and software levels.
 ![thumbnail](thumbnail.png)
 ![sancus-trace](sancus_keystroke_trace_annotated.png)
 
-## Source code overview ![status](https://travis-ci.org/jovanbulck/nemesis.svg?branch=master)
+## Source code overview [![Build Status](https://travis-ci.org/jovanbulck/nemesis.svg?branch=master)](https://travis-ci.org/jovanbulck/nemesis)
 
 We evaluated interrupt timing attacks on two case study platforms.
 
