@@ -12,6 +12,7 @@ $(SUBDIR_ALL): %.all:
 
 $(SUBDIR_SIM): %.sim:
 	unbuffer make -C $* clean sim | tee sim.out && ! grep -iqE "fail|error:" sim.out
+	$*/leak.py sim.out
 
 $(SUBDIR_CLEAN): %.clean:
 	make -C $* clean

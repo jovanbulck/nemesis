@@ -20,5 +20,5 @@ int main()
 }
 
 /* ======== TIMER A ISR ======== */
-SANCUS_STEP_ISR_ENTRY(__ss_print_latency, __ss_end)
+SANCUS_STEP_ISR_ENTRY2(__ss_print_latency, __ss_end)
 
