@@ -15,13 +15,14 @@ before_install:
 
 script:
   - docker run -t sancus-devel /bin/sh -c \
-        "git clone https://github.com/jovanbulck/nemesis.git && cd nemesis/sancus/stubs &&
-         git checkout $TRAVIS_BRANCH && make SANCUS_SECURITY=$SECURITY $TARGET.sim"
+        "git clone https://github.com/jovanbulck/nemesis.git && cd nemesis/$TARGET_DIR &&
+         git checkout $TRAVIS_BRANCH && make SANCUS_SECURITY=$SECURITY $TARGET"
   - docker ps -a
 
 env:
-  - TARGET=multiplication-stub       SECURITY=64
-  - TARGET=signed-division-stub      SECURITY=64
-  - TARGET=signed-modulo-stub        SECURITY=64
-  - TARGET=unsigned-division-stub    SECURITY=64
-  - TARGET=unsigned-modulo-stub      SECURITY=64
+  - TARGET_DIR=sancus/stubs TARGET=multiplication-stub.sim     SECURITY=64
+  - TARGET_DIR=sancus/stubs TARGET=signed-division-stub.sim    SECURITY=64
+  - TARGET_DIR=sancus/stubs TARGET=signed-modulo-stub.sim      SECURITY=64
+  - TARGET_DIR=sancus/stubs TARGET=unsigned-division-stub.sim  SECURITY=64
+  - TARGET_DIR=sancus/stubs TARGET=unsigned-modulo-stub.sim    SECURITY=64
+  - TARGET_DIR=sancus/bsl   TARGET=sim                         SECURITY=64
