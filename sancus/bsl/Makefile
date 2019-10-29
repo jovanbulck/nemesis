@@ -1,52 +1,66 @@
-SANCUS_SUPPORT_DIR = /usr/local/share/sancus-support
-DEVICE             = /dev/ttyUSB0
-VENDOR_KEY         = 4078d505d82099ba
-
-CC                 = sancus-cc
-LD                 = sancus-ld
-CRYPTO             = sancus-crypto
-LOAD               = sancus-loader
-RM                 = rm -f
-
-CFLAGS             = -I$(SANCUS_SUPPORT_DIR)/include/ --verbose #-o0 -g
-ifdef __SANCUS_SIM
-    CFLAGS += -D__SANCUS_SIM
+ifndef SANCUS_DIR
+  SANCUS_SUPPORT_DIR  = "/usr/local/share/sancus-support"
+else
+  SANCUS_SUPPORT_DIR  = ${SANCUS_DIR}/share/sancus-support
 endif
 
-MEM_SIZE_FLAGS      = --ram-size 24K --rom-size 32K
-SIM_FLAGS           = $(MEM_SIZE_FLAGS)
+ifndef SANCUS_SECURITY
+  SANCUS_SECURITY   = 64
+endif
+ifeq ($(SANCUS_SECURITY), 64)
+    SANCUS_KEY      = deadbeefcafebabe
+else
+    SANCUS_KEY      = deadbeefcafebabec0defeeddefec8ed
+endif
 
-LDFLAGS            = --standalone --verbose $(MEM_SIZE_FLAGS) #--debug
-LIBS               = -L$(SANCUS_SUPPORT_DIR)/lib -ldev-uart -ldev-timer -ldev-pmodkypd
-CRYPTOFLAGS        = --key $(VENDOR_KEY) --debug --fill-macs
-LOADFLAGS          = -device $(DEVICE) -baudrate 115200
+CC                  = sancus-cc
+LD                  = sancus-ld
+SANCUS_CRYPTO       = sancus-crypto
+SANCUS_SIM          = sancus-sim
+SANCUS_LOAD         = sancus-loader
+RM                  = rm -f
 
-NAME               = sancus-bsl
-OBJECTS            = main.o sm-bsl.o sm_io_wrap.o
-TARGET             = $(NAME).elf
-TARGET_NO_MACS     = $(TARGET)-no-macs
+VENDOR_ID           = 1234
+RAM_SIZE            = 16K
+ROM_SIZE            = 41K
+FPGA_DEV            = /dev/ttyUSB0
+FPGA_RATE           = 115200
 
-%.o : %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+VENDOR_KEY          = $(shell $(SANCUS_CRYPTO) --key $(SANCUS_KEY) --gen-vendor-key $(VENDOR_ID) | xxd -p)
+MEMFLAGS            = --ram $(RAM_SIZE) --rom $(ROM_SIZE)
 
-$(TARGET): $(TARGET_NO_MACS)
-	$(CRYPTO) $(CRYPTOFLAGS) -o $@ $<
+CFLAGS              = -I$(SANCUS_SUPPORT_DIR)/include/ -Wfatal-errors -fcolor-diagnostics -Os -g
+LDFLAGS             = -L$(SANCUS_SUPPORT_DIR)/lib/ $(MEMFLAGS) -lsm-io -ldev --inline-arithmetic --standalone --verbose
+SIMFLAGS            = $(MEMFLAGS)
+CRYPTOFLAGS         = --key $(VENDOR_KEY) --verbose
+LOADFLAGS           = -device $(FPGA_DEV) -baudrate $(FPGA_RATE)
 
-$(TARGET_NO_MACS): $(OBJECTS)
-	@echo "========== NOW LINKING =========="
-	$(LD) $(LDFLAGS) -o $@ $^ $(LIBS)
+ifeq ($(QUIET),1)
+    CFLAGS += -DQUIET
+endif
 
-.PHONY: load
+
+SOURCES         = $(shell ls *.c)
+OBJECTS         = $(SOURCES:.c=.o)
+
+TARGET          = main.elf
+TARGET_NO_MAC   = no_mac_$(TARGET)
+
+all: $(TARGET)
+
+$(TARGET_NO_MAC): $(OBJECTS)
+	$(LD) $(LDFLAGS) -lsancus-step  -o $@ $^
+
+$(TARGET): $(TARGET_NO_MAC)
+	$(SANCUS_CRYPTO) --fill-macs $(CRYPTOFLAGS) -o $@ $<
+
 load: $(TARGET)
-	$(MAKE) --always-make
-	$(LOAD) $(LOADFLAGS) $<
+	$(SANCUS_LOAD) $(LOADFLAGS) $<
 
-.PHONY: sim
-sim:
-	$(MAKE) CFLAGS="$(CFLAGS) -D__SANCUS_SIM" --always-make
-	sancus-sim $(SIM_FLAGS) $(TARGET)
+sim: $(TARGET)
+	$(SANCUS_SIM) $(SIMFLAGS) $<
 
-.PHONY: clean
 clean:
-	$(RM) $(TARGET) $(TARGET_NO_MACS) $(OBJECTS)
-	$(RM) *.fst *.bin
+	$(RM) $(TARGET) $(TARGET_NO_MAC) $(OBJECTS)
+	rm -f sim-input.bin sim-output.bin
+	rm -f *.fst *.vcd
