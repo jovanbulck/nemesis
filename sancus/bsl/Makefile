@@ -39,6 +39,9 @@ ifeq ($(QUIET),1)
     CFLAGS += -DQUIET
 endif
 
+ifdef TRAVIS_CI
+    CFLAGS += -DTRAVIS_CI=1
+endif
 
 SOURCES         = $(shell ls *.c)
 OBJECTS         = $(SOURCES:.c=.o)
@@ -58,7 +61,7 @@ load: $(TARGET)
 	$(SANCUS_LOAD) $(LOADFLAGS) $<
 
 sim: $(TARGET)
-	$(SANCUS_SIM) $(SIMFLAGS) $<
+	unbuffer $(SANCUS_SIM) $(SIMFLAGS) $< | tee sim.out && ! grep -iqE "fail|error:" sim.out
 
 clean:
 	$(RM) $(TARGET) $(TARGET_NO_MAC) $(OBJECTS)

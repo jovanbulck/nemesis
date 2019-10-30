@@ -13,7 +13,13 @@ char SM_ENTRY(sm_bsl) BSL430_unlock_BSL_balanced(char* data);
 
 #define INTERRUPT_VECTOR_START 0xFFE0
 #define INTERRUPT_VECTOR_END   0xFFFF
-#define BSL_PASSWORD_LENGTH    (INTERRUPT_VECTOR_END - INTERRUPT_VECTOR_START + 1)
+
+/* NOTE: speed up Travis-CI builds */
+#ifdef TRAVIS_CI
+    #define BSL_PASSWORD_LENGTH    3
+#else
+    #define BSL_PASSWORD_LENGTH    (INTERRUPT_VECTOR_END - INTERRUPT_VECTOR_START + 1)
+#endif
 
 //#define LEAK_BSL_TSC
 #ifdef LEAK_BSL_TSC
