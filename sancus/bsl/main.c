@@ -30,6 +30,12 @@ void attacker_isr(void) {
             pr_info2("Found pwd[%d]=0x%x\n", byte_index, guess[byte_index] & 0xff);
             if (guess[byte_index] != ivt[byte_index])
                 pr_info("error: guess wrong");
+
+            /* HACK: simulator seems to hang so terminate on last byte recovery */
+            if (byte_index == (BSL_PASSWORD_LENGTH - 1))
+            {
+                EXIT();
+            }
         }
     }
     step++;
