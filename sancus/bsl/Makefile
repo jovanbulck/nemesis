@@ -37,6 +37,7 @@ LOADFLAGS           = -device $(FPGA_DEV) -baudrate $(FPGA_RATE)
 
 ifdef TRAVIS
     SIMFLAGS 	   += --crypto-noshow
+    CFLAGS 	   += -DTRAVIS=1
 endif
 
 ifeq ($(QUIET),1)
