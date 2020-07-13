@@ -31,9 +31,13 @@ MEMFLAGS            = --ram $(RAM_SIZE) --rom $(ROM_SIZE)
 
 CFLAGS              = -I$(SANCUS_SUPPORT_DIR)/include/ -Wfatal-errors -fcolor-diagnostics -Os -g
 LDFLAGS             = -L$(SANCUS_SUPPORT_DIR)/lib/ $(MEMFLAGS) -lsm-io -ldev --inline-arithmetic --standalone --verbose
-SIMFLAGS            = $(MEMFLAGS)
+SIMFLAGS            = #$(MEMFLAGS)
 CRYPTOFLAGS         = --key $(VENDOR_KEY) --verbose
 LOADFLAGS           = -device $(FPGA_DEV) -baudrate $(FPGA_RATE)
+
+ifdef TRAVIS
+    SIMFLAGS 	   += --crypto-noshow
+endif
 
 ifeq ($(QUIET),1)
     CFLAGS += -DQUIET

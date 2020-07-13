@@ -11,7 +11,11 @@ RM                 = rm -f
 CFLAGS             = -I$(SANCUS_SUPPORT_DIR)/include/ --verbose -O1 #-Os
 
 MEM_SIZE_FLAGS      = --ram-size 24K --rom-size 32K
-SIM_FLAGS           = $(MEM_SIZE_FLAGS)
+SIM_FLAGS           = #$(MEM_SIZE_FLAGS)
+
+ifdef TRAVIS
+    SIMFLAGS 	   += --crypto-noshow
+endif
 
 LDFLAGS            = --standalone --verbose $(MEM_SIZE_FLAGS) #--debug
 LIBS               = -L$(SANCUS_SUPPORT_DIR)/lib -ldev-uart -ldev-timer -ldev-pmodkypd -lsm-io
