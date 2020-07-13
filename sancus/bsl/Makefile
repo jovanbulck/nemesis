@@ -43,10 +43,6 @@ ifeq ($(QUIET),1)
     CFLAGS += -DQUIET
 endif
 
-ifdef TRAVIS_CI
-    CFLAGS += -DTRAVIS_CI=1
-endif
-
 SOURCES         = $(shell ls *.c)
 OBJECTS         = $(SOURCES:.c=.o)
 
