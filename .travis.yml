@@ -10,7 +10,7 @@ services:
 language: c
 
 before_install:
-  - git clone https://github.com/sancus-pma/sancus-main.git
+  - git clone https://github.com/sancus-tee/sancus-main.git
   - cd sancus-main/docker && make build SANCUS_SECURITY=$SECURITY 
 
 script:

@@ -45,8 +45,8 @@ We evaluated interrupt timing attacks on two case study platforms.
   applications scenarios plus corresponding attacker code. Note that the secure
   interrupt architectural extensions we implemented for this work have been
   upstreamed to the open-source
-  [sancus-core](https://github.com/sancus-pma/sancus-core) and
-  [sancus-compiler](https://github.com/sancus-pma/sancus-compiler) repositories.
+  [sancus-core](https://github.com/sancus-tee/sancus-core) and
+  [sancus-compiler](https://github.com/sancus-tee/sancus-compiler) repositories.
 
 - **Intel SGX:** this directory contains source code for the microbenchmarks,
   binary search, and Zigzagger enclave evaluation scenarios plus corresponding
