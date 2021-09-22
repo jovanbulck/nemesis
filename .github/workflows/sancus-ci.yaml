@@ -1,0 +1,29 @@
+name: Run Sancus attacks in cycle-accurate Verilog simulation
+on:
+  push:
+  pull_request:
+  # trigger a cron job every monday at 8am
+  schedule:
+    - cron: '00 08 * * MON'
+
+jobs:
+  test-sancus:
+    name: Test ${{ matrix.target }} (${{ matrix.sancus-security}}-bit security)
+    runs-on: ubuntu-latest
+    container:
+      # sancus-devel Docker container is regularly built and published in the sancus-main Action Workflow
+      image: docker.pkg.github.com/sancus-tee/sancus-main/sancus-devel-${{ matrix.sancus-security }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      matrix:
+        target: [bsl, multiplication-stub, signed-division-stub, signed-modulo-stub, unsigned-division-stub, unsigned-modulo-stub]
+        sancus-security: [64, 128]
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Pull repository
+      - run: cd sancus && make SANCUS_SECURITY=${{ matrix.sancus-security }} TRAVIS=1 ${{ matrix.target }}
+        name: Build and run ${{ matrix.target }} @ ${{ matrix.sancus-security}}-bit security
+
