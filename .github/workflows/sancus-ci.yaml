@@ -1,4 +1,4 @@
-name: Run Sancus attacks in cycle-accurate Verilog simulation
+name: Sancus attack simulation
 on:
   push:
   pull_request:
