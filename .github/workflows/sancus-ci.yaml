@@ -24,6 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Pull repository
-      - run: cd sancus && make SANCUS_SECURITY=${{ matrix.sancus-security }} TRAVIS=1 ${{ matrix.target }}
+      - run: cd sancus && make --always-make SANCUS_SECURITY=${{ matrix.sancus-security }} TRAVIS=1 ${{ matrix.target }}
         name: Build and run ${{ matrix.target }} @ ${{ matrix.sancus-security}}-bit security
 

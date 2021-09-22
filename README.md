@@ -1,4 +1,5 @@
 # Nemesis: Studying microarchitectural timing leaks in rudimentary CPU interrupt logic
+[![Sancus attacks](https://github.com/jovanbulck/nemesis/actions/workflows/sancus-ci.yaml/badge.svg)](https://github.com/jovanbulck/nemesis/actions/workflows/sancus-ci.yaml)
 
 This repository contains the source code accompanying our
 [paper](https://people.cs.kuleuven.be/~jo.vanbulck/ccs18.pdf)
@@ -37,7 +38,7 @@ mitigating Nemesis-type attacks at the hardware and software levels.
 ![thumbnail](thumbnail.png)
 ![sancus-trace](sancus_keystroke_trace_annotated.png)
 
-## Source code overview [![Build Status](https://travis-ci.org/jovanbulck/nemesis.svg?branch=master)](https://travis-ci.org/jovanbulck/nemesis)
+## Source code overview [![Sancus attacks](https://github.com/jovanbulck/nemesis/actions/workflows/sancus-ci.yaml/badge.svg)](https://github.com/jovanbulck/nemesis/actions/workflows/sancus-ci.yaml)
 
 We evaluated interrupt timing attacks on two case study platforms.
 
