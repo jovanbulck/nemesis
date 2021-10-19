@@ -62,7 +62,9 @@ load: $(TARGET)
 	$(SANCUS_LOAD) $(LOADFLAGS) $<
 
 sim: $(TARGET)
-	unbuffer $(SANCUS_SIM) $(SIMFLAGS) $< | tee sim.out && ! grep -iqE "fail|error:" sim.out
+	unbuffer $(SANCUS_SIM) $(SIMFLAGS) $< | tee sim.out
+	! grep -iqE "fail|error:" sim.out
+	grep -iq "all done; exiting.." sim.out
 
 clean:
 	$(RM) $(TARGET) $(TARGET_NO_MAC) $(OBJECTS)

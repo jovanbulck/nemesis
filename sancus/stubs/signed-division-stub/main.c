@@ -15,8 +15,7 @@ int main()
     __ss_start();
     volatile int rv = leak_foo();
     
-    printf("All done!\n");
-    EXIT();
+    FINISH();
 }
 
 /* ======== TIMER A ISR ======== */

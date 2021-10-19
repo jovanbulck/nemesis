@@ -34,7 +34,7 @@ void attacker_isr(void) {
             /* HACK: simulator seems to hang so terminate on last byte recovery */
             if (byte_index == (BSL_PASSWORD_LENGTH - 1))
             {
-                EXIT();
+                FINISH();
             }
         }
     }
@@ -107,7 +107,7 @@ int main(void)
         }
     }
 
-    EXIT();
+    FINISH();
 }
 
 SANCUS_STEP_ISR_ENTRY2(attacker_isr, __ss_end);
